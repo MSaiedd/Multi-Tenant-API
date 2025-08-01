@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Multi_Tenant_API.Application.DTOs;
 using Multi_Tenant_API.Application.Interfaces;
 
 namespace Multi_Tenant_API.API.Controllers
@@ -28,30 +29,49 @@ namespace Multi_Tenant_API.API.Controllers
 
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(long id, String name) {
-            
-            //update the entity with the id = id if its belong to the tenet that in the current resolved val
-            return BadRequest(ModelState);
-            
+        public async Task<IActionResult> Update([FromRoute] int id , EntityCreationDto entityCreationDto) {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            bool isUpdated = await entityAService.UpdateEntity(entityCreationDto,id);
+            if (!isUpdated)
+                return NotFound();
+
+            return Ok(entityCreationDto);
+
         }
 
         [Authorize]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(long id, String name)
+        public async Task<IActionResult> Delete([FromRoute]int id)
         {
 
-            //update the entity with the id = id if its belong to the tenet that in the current resolved val
-            return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            bool isDeleted= await entityAService.DeleteEntity(id);
+            if (!isDeleted)
+                return NotFound();
+
+            return Ok();
 
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Post(String name)
+        public async Task<IActionResult> Post( EntityCreationDto entityCreationDTO)
         {
 
-            //update the entity with the id = id if its belong to the tenet that in the current resolved val
-            return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            bool isAdded= await entityAService.AddEntity(entityCreationDTO);
+            
+            if (!isAdded)
+                return NotFound();
+
+            return Ok();
 
         }
 

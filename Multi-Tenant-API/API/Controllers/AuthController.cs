@@ -27,7 +27,7 @@ namespace Multi_Tenant_API.API.Controllers
 
 
         [HttpPost("login")]
-        public async Task<IActionResult> Auth([FromBody] string key)
+        public async Task<IActionResult> Auth([FromHeader(Name = "ApiKey")] string key)
         {
 
 
@@ -37,8 +37,7 @@ namespace Multi_Tenant_API.API.Controllers
                 return BadRequest("ERROR");
             }
 
-            //var id = await this.entityAService.Auth(key);
-            var id = 1;
+            var id = await this.entityAService.Auth(key);
             if (id == null) {
 
                 return BadRequest("Not found");
@@ -46,7 +45,6 @@ namespace Multi_Tenant_API.API.Controllers
 
             var token = tokenProvider.Create((int)id);
 
-            Console.WriteLine("Generated Token: " + token);
 
             return Ok(new { token });
 
