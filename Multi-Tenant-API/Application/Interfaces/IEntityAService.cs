@@ -9,7 +9,10 @@ namespace Multi_Tenant_API.Application.Interfaces
 
         public Task<bool> UpdateEntity(EntityA entityA);
         public Task<bool> DeleteEntity(int id);
-        
+
+        public Task<int?> Auth(String key);
+
+
 
         }
     }

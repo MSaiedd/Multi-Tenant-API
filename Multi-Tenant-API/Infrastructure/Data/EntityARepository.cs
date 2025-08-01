@@ -59,5 +59,17 @@ namespace Multi_Tenant_API.Infrastructure.Data
                 return false;
             }
         }
+
+
+        public async Task<int?> GetTenantId(String key)
+        {
+            var tenantId = await context.Tenant
+            .Where(t => t.ApiKey == key)
+            .Select(t => (int?)t.Id)
+            .FirstOrDefaultAsync();
+
+            return tenantId;
+
+        }
     }
 }

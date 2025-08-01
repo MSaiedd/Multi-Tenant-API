@@ -42,6 +42,43 @@ namespace Multi_Tenant_API.Infrastructure.Data
             });
 
 
+            modelBuilder.Entity<Tenant>().HasData(
+          new Tenant
+          {
+              Id = 1,
+              Name = "Tenant A",
+              ApiKey = "APIKEY_TENANT_A"
+          },
+          new Tenant
+          {
+              Id = 2,
+              Name = "Tenant B",
+              ApiKey = "APIKEY_TENANT_B"
+          }
+      );
+
+            // Seed EntityA
+            modelBuilder.Entity<EntityA>().HasData(
+                new EntityA
+                {
+                    Id = 1,
+                    Name = "Entity A1",
+                    TenantId = 1
+                },
+                new EntityA
+                {
+                    Id = 2,
+                    Name = "Entity A2",
+                    TenantId = 1
+                },
+                new EntityA
+                {
+                    Id = 3,
+                    Name = "Entity A3",
+                    TenantId = 2
+                }
+            );
+
         }
     }
 }

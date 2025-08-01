@@ -9,5 +9,8 @@ namespace Multi_Tenant_API.Application.Interfaces
 
         public Task<bool> AddEntity(EntityA entityA);
         public Task<bool> UpdateEntity(EntityA entityA);
+        public Task<int?> GetTenantId(String key);
+
+
     }
 }
