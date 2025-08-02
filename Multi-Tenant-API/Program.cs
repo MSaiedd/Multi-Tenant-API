@@ -6,6 +6,7 @@ using Multi_Tenant_API.API.Middleware;
 using Multi_Tenant_API.Application.Interfaces;
 using Multi_Tenant_API.Application.Services;
 using Multi_Tenant_API.Infrastructure.Data;
+using Serilog;
 using SQLitePCL;
 using System.Text;
 
@@ -22,6 +23,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IEntityARepository, EntityARepository>();
 builder.Services.AddScoped<IEntityAService, EntityAService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddSingleton<TokenProvider>();
 builder.Services.AddScoped<TenantResolver>();
 builder.Services.AddAuthentication(options =>
@@ -69,6 +72,11 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
+
+
+
 var app = builder.Build();
 app.UseAuthentication();
 app.UseMiddleware<TenantContextMiddleware>(); 
@@ -81,6 +89,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

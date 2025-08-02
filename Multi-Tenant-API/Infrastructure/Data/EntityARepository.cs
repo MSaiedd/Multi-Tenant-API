@@ -24,7 +24,6 @@ namespace Multi_Tenant_API.Infrastructure.Data
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error adding entity: {ex.Message}");
                 return false!;
             }
         }
@@ -34,8 +33,8 @@ namespace Multi_Tenant_API.Infrastructure.Data
             var entity = await context.EntityA.FindAsync(id);
             if (entity != null)
             {
-                context.EntityA.Remove(entity);
-                await context.SaveChangesAsync();
+                var entityEntry = context.EntityA.Update(entity);
+                    entityEntry.Property(nameof(EntityA.IsDeleted)).CurrentValue = true;
                 return true;
             }
             return false;
@@ -51,14 +50,12 @@ namespace Multi_Tenant_API.Infrastructure.Data
         public async Task<bool> UpdateEntity(EntityA entityA)
         {
             var existing = await context.EntityA.FindAsync(entityA.Id);
-            Console.WriteLine($"Error updating entity: ",entityA.Id);
 
             if (existing == null)
                 return false;
 
             existing.Name = entityA.Name; // Only update what you need
 
-            await context.SaveChangesAsync();
             return true;
         }
 

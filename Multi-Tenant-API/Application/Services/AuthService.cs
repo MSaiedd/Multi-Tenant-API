@@ -3,11 +3,11 @@ using Multi_Tenant_API.Infrastructure.Data;
 
 namespace Multi_Tenant_API.Application.Services
 {
-    public class AuthServise : IAuthService
+    public class AuthService : IAuthService
     {
         IEntityARepository EntityARepository;
 
-        public AuthServise(IEntityARepository EntityARepository, TenantResolver tenantResolver)
+        public AuthService(IEntityARepository EntityARepository)
         {
 
             this.EntityARepository = EntityARepository;

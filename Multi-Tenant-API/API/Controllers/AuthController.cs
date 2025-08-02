@@ -14,13 +14,13 @@ namespace Multi_Tenant_API.API.Controllers
     [Route("api/auth/[controller]")]
     public class AuthController : Controller
     {
-        private readonly IEntityAService entityAService;
+        private readonly IAuthService authService;
         private readonly TokenProvider tokenProvider;
 
-        public AuthController(IEntityAService entityAService, TokenProvider tokenProvider)
+        public AuthController(IAuthService authService, TokenProvider tokenProvider)
         {
 
-            this.entityAService = entityAService;
+            this.authService = authService;
             this.tokenProvider = tokenProvider;
 
         }
@@ -37,7 +37,7 @@ namespace Multi_Tenant_API.API.Controllers
                 return BadRequest("ERROR");
             }
 
-            var id = await this.entityAService.Auth(key);
+            var id = await this.authService.Auth(key);
             if (id == null) {
 
                 return BadRequest("Not found");

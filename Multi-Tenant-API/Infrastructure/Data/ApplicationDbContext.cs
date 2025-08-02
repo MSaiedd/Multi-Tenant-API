@@ -13,8 +13,11 @@ namespace Multi_Tenant_API.Infrastructure.Data
         public DbSet<EntityA> EntityA { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        { 
-        
+        {
+
+            modelBuilder.Entity<EntityA>().HasQueryFilter(e => !e.IsDeleted);
+
+
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Tenant>(e => { 
