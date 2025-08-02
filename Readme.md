@@ -194,7 +194,8 @@ erDiagram
 
 Watch the app in action:
 
-[![Watch the video](https://raw.githubusercontent.com/MSaiedd/Multi-Tenant-API/tree/master/Multi-Tenant-API/Images/Request.png)]([https://raw.githubusercontent.com/MSaiedd/Multi-Tenant-API/tree/master/Multi-Tenant-API/Images/SwaggerAPITesting.mp4](https://drive.google.com/file/d/15LTJQF3kxSskoZGLdGy7R9k5kWy7QnW-/view?usp=sharing))
+[![Watch the demo](Multi-Tenant-API//Images/Swagger.png)]([Multi-Tenant-API//Images/SwaggerAPITesting.mp4](https://drive.google.com/file/d/15LTJQF3kxSskoZGLdGy7R9k5kWy7QnW-/view?usp=sharing))
+
 
 ## 📘 Notes
 
