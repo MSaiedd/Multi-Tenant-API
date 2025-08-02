@@ -20,6 +20,8 @@ namespace Multi_Tenant_API.API.Controllers
             this.logger = logger;
         }
 
+
+        //RETURN ENTITIES THAT BELONGS TO USER AUTHORIZED WITH JWT
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetEntities() {
@@ -33,6 +35,8 @@ namespace Multi_Tenant_API.API.Controllers
             return Ok(students);
         }
 
+
+        //RETURN ENTITY THAT BELONGS TO USER AUTHORIZED WITH JWT
         [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id , EntityCreationDto entityCreationDto) {
@@ -61,6 +65,7 @@ namespace Multi_Tenant_API.API.Controllers
 
         }
 
+        //DELETE ENTITIY THAT BELONGS TO USER AUTHORIZED WITH JWT
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute]int id)
@@ -85,6 +90,7 @@ namespace Multi_Tenant_API.API.Controllers
 
         }
 
+        //ADD ENTITY THAT BELONGS TO USER AUTHORIZED WITH JWT
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Post( EntityCreationDto entityCreationDTO)

@@ -5,6 +5,8 @@ using Multi_Tenant_API.Domain;
 
 namespace Multi_Tenant_API.Infrastructure.Data
 {
+
+    //CRUD OPERATIONS ON ENTITY 
     public class EntityARepository : IEntityARepository
     {
         private readonly ApplicationDbContext context;

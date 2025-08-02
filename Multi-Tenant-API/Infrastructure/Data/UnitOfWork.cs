@@ -2,6 +2,7 @@
 
 namespace Multi_Tenant_API.Infrastructure.Data
 {
+    // Unit of Work class to ensure atomicity and separation of concerns
     public class UnitOfWork : IUnitOfWork
     {
         ApplicationDbContext context;

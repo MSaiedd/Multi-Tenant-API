@@ -9,17 +9,19 @@ namespace Multi_Tenant_API.Infrastructure.Data
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options){}
 
+        //MODEL TABLES
         public DbSet<Tenant> Tenant { get; set; }
         public DbSet<EntityA> EntityA { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            //EXCLUDE SOFT DELETED ITEMS FROM QUERIES
             modelBuilder.Entity<EntityA>().HasQueryFilter(e => !e.IsDeleted);
 
 
             base.OnModelCreating(modelBuilder);
 
+            //CONFIGURE ATTRIBUTES OF MODELS
             modelBuilder.Entity<Tenant>(e => { 
             
              e.HasKey(e=>e.Id);
@@ -44,7 +46,7 @@ namespace Multi_Tenant_API.Infrastructure.Data
 
             });
 
-
+            //SEEDING
             modelBuilder.Entity<Tenant>().HasData(
           new Tenant
           {
@@ -60,7 +62,6 @@ namespace Multi_Tenant_API.Infrastructure.Data
           }
       );
 
-            // Seed EntityA
             modelBuilder.Entity<EntityA>().HasData(
                 new EntityA
                 {

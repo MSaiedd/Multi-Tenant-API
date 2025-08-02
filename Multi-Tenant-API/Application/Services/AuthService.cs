@@ -13,6 +13,8 @@ namespace Multi_Tenant_API.Application.Services
             this.EntityARepository = EntityARepository;
         }
 
+
+        //Get tenantId to check if it matches the one in jwt
         public async Task<int?> Auth(String key)
         {
 

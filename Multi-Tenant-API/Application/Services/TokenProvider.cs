@@ -16,10 +16,12 @@ namespace Multi_Tenant_API.Application.Services
 
         public string Create(int tenantId)
         {
-            string secretKey = _configuration["Jwt:Secret"];
+            //secret key that will be encoded to be used in jwt added to secrets file (configured)
+            string secretKey = _configuration["Jwt:Secret"];        
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
+            //claims for creating jwt (just the tenant id)
             var claims = new List<Claim>
             {
                 new Claim("TenantId", tenantId.ToString()) 
@@ -35,7 +37,7 @@ namespace Multi_Tenant_API.Application.Services
             };
 
             var handler = new JsonWebTokenHandler();
-            string token = handler.CreateToken(tokenDescriptor);
+            string token = handler.CreateToken(tokenDescriptor);        //generate token
 
             return token;
         }

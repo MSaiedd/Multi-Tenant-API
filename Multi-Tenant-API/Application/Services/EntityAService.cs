@@ -30,7 +30,7 @@ namespace Multi_Tenant_API.Application.Services
 
         public async Task<bool> AddEntity([FromBody]EntityCreationDto entityCreationDto) {
 
-            int? tenantId = tenantResolver.GetTenantId();
+            int? tenantId = tenantResolver.GetTenantId();       //get id from jwt 
 
             if (tenantId == null) {
 
@@ -38,7 +38,8 @@ namespace Multi_Tenant_API.Application.Services
                 throw new UnauthorizedAccessException("Tenant ID missing.");
 
             }
-                
+            
+            //if id valid then add new entity
             bool isAdded = await this.EntityARepository.AddEntity(EntityAMapper.ToEntity(entityCreationDto,(int)tenantId));
             if (isAdded) {
                 logger.LogDebug("Entity Added ");
@@ -50,16 +51,18 @@ namespace Multi_Tenant_API.Application.Services
         }
 
         public async Task<bool> DeleteEntity(int id) {
-            int? tenantId = tenantResolver.GetTenantId();
+            int? tenantId = tenantResolver.GetTenantId();       //get id from jwt 
 
             int? entityId = await this.EntityARepository.GetTenantIdOfEntity(id);
+
+            //check of tenantid of jwt == tenant that belongs to that entity
             if (tenantId == null || entityId == null || tenantId != entityId) {
                 logger.LogError("Tenant ID Missing And Cant Add Entity");
                 throw new UnauthorizedAccessException("Tenant ID missing.");
 
             }
                
-
+            //check completed then delete entity
             bool isDeleted = await this.EntityARepository.DeleteEntity(id);
             if (isDeleted) {
                 logger.LogDebug("Entity Found ");
@@ -75,12 +78,13 @@ namespace Multi_Tenant_API.Application.Services
         public async Task<ICollection<EntityDTO>> GetEntities() {
             int? tenantId = tenantResolver.GetTenantId();
 
+            //if tenant is not valid return null (exception)
             if (tenantId == null) {
                 logger.LogError("Tenant ID Missing And Cant Fetch Entity");
                 throw new UnauthorizedAccessException("Tenant ID missing.");
             }
                 
-
+            //if valid return
             var entities = await EntityARepository.GetEntities((int)tenantId);
 
             return EntityAMapper.ToDtoList(entities);
@@ -92,7 +96,7 @@ namespace Multi_Tenant_API.Application.Services
 
             int? entityId = await this.EntityARepository.GetTenantIdOfEntity(id);
 
-
+            //check of tenantid of jwt == tenant that belongs to that entity
             if (tenantId == null || entityId == null || tenantId != entityId) {
 
                 logger.LogError("Tenant ID Missing And Cant Update Entity");
@@ -102,7 +106,7 @@ namespace Multi_Tenant_API.Application.Services
                
 
             var dto = new EntityDTO { Id = id, Name = entityCreationDto.Name};
-
+            //check completed then update entity
             bool isUpdated = await this.EntityARepository.UpdateEntity(EntityAMapper.ToEntity(dto, (int)tenantId));
             if (isUpdated) {
                 logger.LogDebug("Entity Found ");

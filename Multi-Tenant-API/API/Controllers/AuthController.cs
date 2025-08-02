@@ -26,6 +26,7 @@ namespace Multi_Tenant_API.API.Controllers
         }
 
 
+        //AUTHENTICATE THE KEYAPI IF ITS VALID
         [HttpPost("login")]
         public async Task<IActionResult> Auth([FromHeader(Name = "ApiKey")] string key)
         {

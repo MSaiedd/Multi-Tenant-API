@@ -17,8 +17,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-Batteries.Init(); 
-
+// Initialize SQLite batteries
+Batteries.Init();
+// Configure the EF Core database context with SQLite
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -26,9 +27,12 @@ builder.Services.AddScoped<IEntityARepository, EntityARepository>();
 builder.Services.AddScoped<IEntityAService, EntityAService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddSingleton<TokenProvider>();
-builder.Services.AddScoped<TenantResolver>();
 
+// Register TokenProvider as a singleton (used for JWT token creation)
+builder.Services.AddSingleton<TokenProvider>();
+// Register the tenant resolver middleware to extract tenant-specific information from the request
+builder.Services.AddScoped<TenantResolver>();
+// Configure JWT authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -49,6 +53,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// Configure Swagger to include JWT authentication 
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -74,13 +79,16 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
+// Configure Serilog for structured request logging
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
 
-
+// Build the application
 var app = builder.Build();
+
+
+// Enable authentication and authorization middleware
 app.UseAuthentication();
 app.UseMiddleware<TenantContextMiddleware>(); 
 app.UseAuthorization();

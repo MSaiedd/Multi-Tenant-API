@@ -1,5 +1,6 @@
 ﻿namespace Multi_Tenant_API.Application.DTOs
 {
+    //DTO to view - modify entities
     public class EntityDTO
     {
 

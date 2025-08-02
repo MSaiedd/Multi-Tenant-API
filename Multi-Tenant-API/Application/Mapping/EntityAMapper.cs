@@ -1,6 +1,7 @@
 ﻿using Multi_Tenant_API.Application.DTOs;
 using Multi_Tenant_API.Domain;
 
+//HELPER CLASS TO MAP BETWEEN ENTITYA MODEL CLASS AND DTOS 
 namespace Multi_Tenant_API.Application.Mapping
 {
     public static class EntityAMapper
@@ -14,6 +15,7 @@ namespace Multi_Tenant_API.Application.Mapping
             };
         }
 
+        
         public static EntityA ToEntity(this EntityDTO dto, int tenantId)
         {
             return new EntityA
