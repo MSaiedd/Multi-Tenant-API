@@ -22,8 +22,7 @@ namespace Multi_Tenant_API.Application.Services
 
             var claims = new List<Claim>
             {
-                new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, tenantId.ToString()),
-                new Claim("TenantId", tenantId.ToString()) // optional: custom claim
+                new Claim("TenantId", tenantId.ToString()) 
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor
