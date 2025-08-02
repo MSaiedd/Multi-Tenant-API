@@ -181,7 +181,7 @@ erDiagram
         int Id
         string Name
         Guid TenantId
-        public bool IsDeleted { get; set; }
+        bool IsDeleted
     }
 ```
 
