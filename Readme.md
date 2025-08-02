@@ -97,7 +97,7 @@ All endpoints are scoped to the current authenticated tenant.
 
 ---
 
-## 🧠 Multi-Tenancy Strategy
+## 🧠 Multi-Tenancy - Tenant Isolation Strategy
 
 * Shared database
 * Each entity contains a `TenantId` foreign key
