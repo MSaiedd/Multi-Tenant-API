@@ -60,7 +60,7 @@ Build a robust multi-tenant RESTful API using ASP.NET Core Web API. The system s
 ---
 ## 🧬 Archeticture Overview
 
-![Alt text](Images//Flow.png)
+![Alt text](Multi-Tenant-API//Images//Flow.png)
 
 ---
 ## 📦 Technology Stack
@@ -186,7 +186,7 @@ erDiagram
 
 ### 🔄 Sequence Diagram (Auth & Request Flow)
 
-![Alt text](Images//Request.png)
+![Alt text](Multi-Tenant-API//Images//Request.png)
 
 
 ---
@@ -194,7 +194,7 @@ erDiagram
 
 Watch the app in action:
 
-[![Watch the demo](Images/Swagger.png)](Images/SwaggerAPITesting.mp4)
+[![Watch the demo](Multi-Tenant-API//Images/Swagger.png)](Multi-Tenant-API//Images/SwaggerAPITesting.mp4)
 
 ## 📘 Notes
 
